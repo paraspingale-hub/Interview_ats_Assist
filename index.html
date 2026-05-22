@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartHire | AI Career Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* Base styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A; 
+            color: #94A3B8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Animated orb background to match Streamlit apps */
+        .background-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            filter: blur(80px);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 { width: 500px; height: 500px; background: #6366F1; top: -150px; left: -100px; }
+        .orb-2 { width: 400px; height: 400px; background: #06B6D4; bottom: -100px; right: -100px; animation-delay: -5s; }
+        .orb-3 { width: 350px; height: 350px; background: #3B82F6; top: 40%; left: 50%; animation-delay: -10s; }
+
+        @keyframes float {
+            0%   { transform: translate(0, 0) scale(1); }
+            33%  { transform: translate(30px, -50px) scale(1.1); }
+            66%  { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* Main Content Container */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* Typography */
+        .main-header {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #06B6D4, #6366F1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .sub-header {
+            font-size: 1.2rem;
+            color: #94A3B8;
+            margin-bottom: 4rem;
+            font-weight: 400;
+            max-width: 600px;
+        }
+
+        /* Card Layout */
+        .options-grid {
+            display: flex;
+            gap: 2rem;
+            max-width: 1000px;
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tool-card {
+            background-color: rgba(30, 41, 59, 0.7);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            color: #FFFFFF;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .card-desc {
+            color: #94A3B8;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .card-action {
+            color: #06B6D4;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .tool-card:hover .card-action {
+            gap: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+        
+        .author-name {
+            color: #E2E8F0;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-container">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="main-container">
+        <p class="sub-header">Select a tool to evaluate your technical skills and optimize your profile for your target IT domain.</p>
+
+        <div class="options-grid">
+            
+            <a href="http://localhost:8501" class="tool-card" target="_blank" onclick="launchApp('Interview Agent')">
+                <div class="card-icon">🎙️</div>
+                <h2 class="card-title">AI Mock Interview</h2>
+                <p class="card-desc">Engage in a dynamic, text-based technical interview. Our LLM will generate targeted questions, evaluate your answers, and provide a comprehensive performance report.</p>
+                <div class="card-action">Start Interview <span>&rarr;</span></div>
+            </a>
+
+            <a href="http://localhost:8502" class="tool-card" target="_blank" onclick="launchApp('Resume Analyzer')">
+                <div class="card-icon">📄</div>
+                <h2 class="card-title">ATS Resume Analyzer</h2>
+                <p class="card-desc">Upload your PDF resume. We will chunk the text and calculate your ATS compatibility score against industry-standard keywords for your chosen IT domain.</p>
+                <div class="card-action">Analyze Resume <span>&rarr;</span></div>
+            </a>
+
+        </div>
+    </div>
+
+
+    <script>
+        function launchApp(appName) {
+            console.log(`Launching ${appName}... Make sure the Streamlit server is running!`);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "domain": "edge_ai_tinyml",
+  "keywords": {
+    "tensorflow lite": {"weight": 4, "category": "framework"},
+    "tflite": {"weight": 4, "category": "framework"},
+    "onnx": {"weight": 4, "category": "runtime"},
+    "model quantization": {"weight": 5, "category": "optimization"},
+    "pruning": {"weight": 5, "category": "optimization"},
+    "openvino": {"weight": 4, "category": "toolkit"},
+    "edge impulse": {"weight": 4, "category": "platform"},
+    "microcontrollers": {"weight": 3, "category": "hardware"},
+    "arduino": {"weight": 3, "category": "hardware"},
+    "raspberry pi": {"weight": 3, "category": "hardware"},
+    "jetson nano": {"weight": 4, "category": "hardware"},
+    "knowledge distillation": {"weight": 5, "category": "optimization"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 20},
+    "intermediate": {"min": 21, "max": 50},
+    "expert": {"min": 51, "max": 100}
+  }
+}

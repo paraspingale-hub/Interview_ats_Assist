@@ -1,0 +1,22 @@
+{
+  "domain": "reinforcement_learning",
+  "keywords": {
+    "q-learning": {"weight": 4, "category": "algorithm"},
+    "deep q-networks": {"weight": 5, "category": "algorithm"},
+    "dqn": {"weight": 4, "category": "algorithm"},
+    "ppo": {"weight": 5, "category": "algorithm"},
+    "proximal policy optimization": {"weight": 5, "category": "algorithm"},
+    "gymnasium": {"weight": 4, "category": "environment"},
+    "openai gym": {"weight": 3, "category": "environment"},
+    "stable baselines3": {"weight": 5, "category": "library"},
+    "markov decision process": {"weight": 3, "category": "theory"},
+    "mdp": {"weight": 3, "category": "theory"},
+    "reward shaping": {"weight": 4, "category": "concept"},
+    "actor-critic": {"weight": 4, "category": "architecture"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 20},
+    "intermediate": {"min": 21, "max": 45},
+    "expert": {"min": 46, "max": 100}
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "domain": "natural_language_processing",
+  "keywords": {
+    "bert": {"weight": 4, "category": "architecture"},
+    "spacy": {"weight": 4, "category": "library"},
+    "nltk": {"weight": 2, "category": "library"},
+    "named entity recognition": {"weight": 3, "category": "task"},
+    "ner": {"weight": 3, "category": "task"},
+    "sentiment analysis": {"weight": 2, "category": "task"},
+    "word embeddings": {"weight": 3, "category": "concept"},
+    "word2vec": {"weight": 3, "category": "concept"},
+    "text preprocessing": {"weight": 2, "category": "fundamental"},
+    "tokenization": {"weight": 2, "category": "fundamental"},
+    "transformers": {"weight": 4, "category": "architecture"},
+    "sequence to sequence": {"weight": 4, "category": "concept"},
+    "seq2seq": {"weight": 4, "category": "concept"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 20},
+    "intermediate": {"min": 21, "max": 45},
+    "expert": {"min": 46, "max": 100}
+  }
+}

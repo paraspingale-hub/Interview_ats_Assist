@@ -1,0 +1,22 @@
+{
+  "domain": "ai_trust_safety_ethics",
+  "keywords": {
+    "explainable ai": {"weight": 5, "category": "concept"},
+    "xai": {"weight": 5, "category": "concept"},
+    "bias detection": {"weight": 4, "category": "methodology"},
+    "fairlearn": {"weight": 4, "category": "library"},
+    "aif360": {"weight": 4, "category": "library"},
+    "shap": {"weight": 4, "category": "interpretability"},
+    "lime": {"weight": 4, "category": "interpretability"},
+    "adversarial robustness": {"weight": 5, "category": "security"},
+    "differential privacy": {"weight": 5, "category": "privacy"},
+    "federated learning": {"weight": 5, "category": "architecture"},
+    "ai governance": {"weight": 3, "category": "compliance"},
+    "model lineage": {"weight": 3, "category": "tracking"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 25},
+    "intermediate": {"min": 26, "max": 50},
+    "expert": {"min": 51, "max": 100}
+  }
+}
