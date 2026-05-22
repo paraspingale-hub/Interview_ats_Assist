@@ -1,0 +1,21 @@
+{
+  "domain": "c_cpp_systems",
+  "keywords": {
+    "c": {"weight": 3, "category": "core_language"},
+    "c++": {"weight": 3, "category": "core_language"},
+    "memory management": {"weight": 5, "category": "core_concept"},
+    "pointers": {"weight": 4, "category": "core_concept"},
+    "virtual file system": {"weight": 5, "category": "os_concept"},
+    "operating systems": {"weight": 4, "category": "os_concept"},
+    "opengl": {"weight": 4, "category": "graphics"},
+    "computer graphics": {"weight": 4, "category": "concept"},
+    "multithreading": {"weight": 5, "category": "advanced_concept"},
+    "stl": {"weight": 4, "category": "library"},
+    "data structures": {"weight": 3, "category": "fundamental"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 20},
+    "intermediate": {"min": 21, "max": 45},
+    "expert": {"min": 46, "max": 100}
+  }
+}

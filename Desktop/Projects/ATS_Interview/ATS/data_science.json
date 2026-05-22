@@ -1,0 +1,22 @@
+{
+  "domain": "data_science",
+  "keywords": {
+    "python": {"weight": 3, "category": "core_language"},
+    "r": {"weight": 3, "category": "core_language"},
+    "pandas": {"weight": 4, "category": "library"},
+    "numpy": {"weight": 4, "category": "library"},
+    "matplotlib": {"weight": 3, "category": "visualization"},
+    "seaborn": {"weight": 3, "category": "visualization"},
+    "sql": {"weight": 3, "category": "database"},
+    "machine learning": {"weight": 4, "category": "concept"},
+    "statistics": {"weight": 4, "category": "fundamental"},
+    "ab testing": {"weight": 4, "category": "methodology"},
+    "tableau": {"weight": 3, "category": "tool"},
+    "power bi": {"weight": 3, "category": "tool"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 25},
+    "intermediate": {"min": 26, "max": 50},
+    "expert": {"min": 51, "max": 100}
+  }
+}

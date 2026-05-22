@@ -1,0 +1,23 @@
+{
+  "domain": "mlops_engineering",
+  "keywords": {
+    "mlflow": {"weight": 5, "category": "tracking"},
+    "kubeflow": {"weight": 5, "category": "orchestration"},
+    "dvc": {"weight": 4, "category": "data_versioning"},
+    "data version control": {"weight": 4, "category": "data_versioning"},
+    "feature store": {"weight": 4, "category": "infrastructure"},
+    "feast": {"weight": 4, "category": "tool"},
+    "model monitoring": {"weight": 4, "category": "concept"},
+    "evidentlyai": {"weight": 3, "category": "tool"},
+    "bentoml": {"weight": 4, "category": "deployment"},
+    "triton inference server": {"weight": 5, "category": "deployment"},
+    "ci/cd for ml": {"weight": 4, "category": "methodology"},
+    "docker": {"weight": 3, "category": "containerization"},
+    "kubernetes": {"weight": 4, "category": "orchestration"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 20},
+    "intermediate": {"min": 21, "max": 50},
+    "expert": {"min": 51, "max": 100}
+  }
+}

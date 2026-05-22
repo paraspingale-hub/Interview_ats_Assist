@@ -1,0 +1,20 @@
+{
+  "domain": "python_backend",
+  "keywords": {
+    "python": {"weight": 3, "category": "core_language"},
+    "django": {"weight": 5, "category": "framework"},
+    "fastapi": {"weight": 5, "category": "framework"},
+    "flask": {"weight": 4, "category": "framework"},
+    "postgresql": {"weight": 4, "category": "database"},
+    "redis": {"weight": 4, "category": "caching"},
+    "celery": {"weight": 5, "category": "task_queue"},
+    "rest api": {"weight": 3, "category": "concept"},
+    "docker": {"weight": 4, "category": "devops"},
+    "sql": {"weight": 3, "category": "database"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 20},
+    "intermediate": {"min": 21, "max": 45},
+    "expert": {"min": 46, "max": 100}
+  }
+}

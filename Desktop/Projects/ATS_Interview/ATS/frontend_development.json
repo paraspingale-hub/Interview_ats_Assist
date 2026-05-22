@@ -1,0 +1,20 @@
+{
+  "domain": "frontend_development",
+  "keywords": {
+    "html": {"weight": 2, "category": "core"},
+    "css": {"weight": 2, "category": "core"},
+    "javascript": {"weight": 3, "category": "core_language"},
+    "react": {"weight": 5, "category": "framework"},
+    "vue": {"weight": 4, "category": "framework"},
+    "angular": {"weight": 4, "category": "framework"},
+    "typescript": {"weight": 4, "category": "language"},
+    "redux": {"weight": 4, "category": "state_management"},
+    "tailwind css": {"weight": 3, "category": "styling"},
+    "responsive design": {"weight": 3, "category": "concept"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 20},
+    "intermediate": {"min": 21, "max": 45},
+    "expert": {"min": 46, "max": 100}
+  }
+}

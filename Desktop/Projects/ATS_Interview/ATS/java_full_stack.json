@@ -1,0 +1,21 @@
+{
+  "domain": "java_full_stack",
+  "keywords": {
+    "java": {"weight": 3, "category": "core_language"},
+    "jvm": {"weight": 4, "category": "core_concept"},
+    "bytecode": {"weight": 4, "category": "core_concept"},
+    "spring boot": {"weight": 5, "category": "framework"},
+    "hibernate": {"weight": 4, "category": "framework"},
+    "sql": {"weight": 3, "category": "database"},
+    "microservices": {"weight": 5, "category": "architecture"},
+    "rest api": {"weight": 3, "category": "concept"},
+    "angular": {"weight": 4, "category": "frontend"},
+    "react": {"weight": 4, "category": "frontend"},
+    "logic building": {"weight": 3, "category": "fundamental"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 20},
+    "intermediate": {"min": 21, "max": 45},
+    "expert": {"min": 46, "max": 100}
+  }
+}

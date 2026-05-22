@@ -1,0 +1,24 @@
+{
+  "domain": "llm_generative_ai",
+  "keywords": {
+    "transformers": {"weight": 5, "category": "architecture"},
+    "llm": {"weight": 4, "category": "concept"},
+    "langchain": {"weight": 4, "category": "framework"},
+    "llamaindex": {"weight": 4, "category": "framework"},
+    "rag": {"weight": 5, "category": "architecture_pattern"},
+    "retrieval augmented generation": {"weight": 5, "category": "architecture_pattern"},
+    "fine-tuning": {"weight": 4, "category": "methodology"},
+    "lora": {"weight": 5, "category": "optimization"},
+    "qlora": {"weight": 5, "category": "optimization"},
+    "prompt engineering": {"weight": 2, "category": "fundamental"},
+    "vector databases": {"weight": 4, "category": "infrastructure"},
+    "chromadb": {"weight": 3, "category": "tool"},
+    "pinecone": {"weight": 3, "category": "tool"},
+    "hugging face": {"weight": 3, "category": "ecosystem"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 25},
+    "intermediate": {"min": 26, "max": 55},
+    "expert": {"min": 56, "max": 100}
+  }
+}

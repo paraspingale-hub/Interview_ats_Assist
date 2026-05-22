@@ -1,0 +1,23 @@
+{
+  "domain": "computer_vision_advanced",
+  "keywords": {
+    "yolov8": {"weight": 4, "category": "architecture"},
+    "yolov11": {"weight": 5, "category": "architecture"},
+    "segment anything model": {"weight": 5, "category": "architecture"},
+    "sam": {"weight": 4, "category": "architecture"},
+    "diffusion models": {"weight": 5, "category": "generative_architecture"},
+    "stable diffusion": {"weight": 4, "category": "generative_architecture"},
+    "object detection": {"weight": 3, "category": "task"},
+    "image segmentation": {"weight": 3, "category": "task"},
+    "opencv": {"weight": 3, "category": "library"},
+    "detectron2": {"weight": 4, "category": "framework"},
+    "torchvision": {"weight": 3, "category": "library"},
+    "nerf": {"weight": 5, "category": "advanced_concept"},
+    "neural radiance fields": {"weight": 5, "category": "advanced_concept"}
+  },
+  "scoring_thresholds": {
+    "fresher": {"min": 0, "max": 25},
+    "intermediate": {"min": 26, "max": 55},
+    "expert": {"min": 56, "max": 100}
+  }
+}
