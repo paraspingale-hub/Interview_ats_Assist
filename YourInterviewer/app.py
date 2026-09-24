@@ -205,6 +205,11 @@ def render_setup_stage():
         else:
             with st.spinner("Generating targeted questions..."):
                 raw_qs = ask_llm(domain, difficulty)
+                
+                if raw_qs.startswith("❌"):
+                    st.error(raw_qs.replace("\n\n", "  \n"))
+                    return
+
                 parsed_qs = parse_questions(raw_qs)
                 
                 if not parsed_qs:

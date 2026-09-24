@@ -237,7 +237,7 @@ Give one practical suggestion to improve interview performance.
               AI Mock Interview Report
 ============================================================
 
-Author       : PAras Rahul Pingale
+Author       : Paras Rahul Pingale
 Date         : 10/05/2026
 
 Student Name : {self.student_name}
