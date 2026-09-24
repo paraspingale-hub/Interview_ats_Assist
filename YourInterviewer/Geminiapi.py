@@ -9,13 +9,33 @@ Output them strictly as a numbered list where each question is on a new line, li
 2. Explain...
 Do not include conversational filler or titles."""
 
-    return call_gemini(prompt)
+    return call_llm_with_fallback(prompt)
 
 # Function 2: Evaluate Answers (For the MockInterviewAgent)
 def evaluate_with_gemini(prompt: str) -> str:
-    return call_gemini(prompt)
+    return call_llm_with_fallback(prompt)
 
-# Core API call logic
+# Core API call logic with fallbacks
+def call_llm_with_fallback(prompt: str) -> str:
+    # 1. Try Gemini first
+    print("Attempting to call Gemini API...")
+    gemini_response = call_gemini(prompt)
+    if not gemini_response.startswith("❌ Error:"):
+        return gemini_response
+    print(f"Gemini API failed: {gemini_response}")
+
+    # 2. If Gemini fails, try Groq
+    print("Attempting to call Groq API...")
+    groq_response = call_groq(prompt)
+    if not groq_response.startswith("❌ Error:"):
+        return groq_response
+    print(f"Groq API failed: {groq_response}")
+
+    # 3. If Groq fails, try Local LLM (Ollama)
+    print("Attempting to call Local LLM (Ollama)...")
+    local_response = call_ollama(prompt)
+    return local_response
+
 def call_gemini(prompt: str) -> str:
     api_key = os.getenv("GEMINI_API_KEY", "REDACTED_API_KEY")
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}"
@@ -23,10 +43,51 @@ def call_gemini(prompt: str) -> str:
     payload = {"contents": [{"parts": [{"text": prompt}]}]}
 
     try:
-        response = requests.post(url, headers=headers, json=payload, timeout=120) 
+        response = requests.post(url, headers=headers, json=payload, timeout=30) 
         response.raise_for_status()
         result = response.json()
         answer = result.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text")
         return answer if answer else "❌ Error: No response."
+    except Exception as e:
+        return f"❌ Error: {e}"
+
+def call_groq(prompt: str) -> str:
+    api_key = os.getenv("GROQ_API_KEY", "")
+    if not api_key:
+        return "❌ Error: GROQ_API_KEY not set."
+    
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": "llama3-8b-8192",  # Default fast model on Groq
+        "messages": [{"role": "user", "content": prompt}]
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=payload, timeout=30)
+        response.raise_for_status()
+        result = response.json()
+        answer = result.get("choices", [{}])[0].get("message", {}).get("content")
+        return answer if answer else "❌ Error: No response from Groq."
+    except Exception as e:
+        return f"❌ Error: {e}"
+
+def call_ollama(prompt: str) -> str:
+    url = "http://localhost:11434/api/generate"
+    payload = {
+        "model": "qwen3.5",
+        "prompt": prompt,
+        "stream": False
+    }
+
+    try:
+        response = requests.post(url, json=payload, timeout=120)
+        response.raise_for_status()
+        result = response.json()
+        answer = result.get("response")
+        return answer if answer else "❌ Error: No response from local LLM."
     except Exception as e:
         return f"❌ Error: {e}"
