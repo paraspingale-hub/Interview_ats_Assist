@@ -1,5 +1,8 @@
 import streamlit as st
-from Geminiapi import ask_llm  
+try:
+    from .Geminiapi import ask_llm
+except ImportError:  # Preserve direct: streamlit run app.py
+    from Geminiapi import ask_llm
 
 
 def set_custom_css():
@@ -263,11 +266,13 @@ def tech_stack_banner():
     )
 
 
-import streamlit as st
 import re
-from Geminiapi import ask_llm 
-from interview_agent import MockInterviewAgent
-from report_generator import save_report
+try:
+    from .interview_agent import MockInterviewAgent
+    from .report_generator import save_report
+except ImportError:  # Preserve direct: streamlit run app.py
+    from interview_agent import MockInterviewAgent
+    from report_generator import save_report
 
 # ... [Keep your set_custom_css() and tech_stack_banner() functions exactly as they are] ...
 
@@ -368,8 +373,9 @@ def render_report_stage():
         st.session_state.stage = "setup"
         st.rerun()
 
-def main():
-    st.set_page_config(page_title="Technical Assessment", page_icon="🚀", layout="centered")
+def main(configure_page=True):
+    if configure_page:
+        st.set_page_config(page_title="Technical Assessment", page_icon="🚀", layout="centered")
     set_custom_css()
     init_session_state()
 

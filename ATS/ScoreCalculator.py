@@ -1,4 +1,8 @@
 import json
+from pathlib import Path
+
+
+DATA_DIRECTORY = Path(__file__).resolve().parent
 
 def JsonSelctor(domain):
     # Your mapping of dropdown values to file names
@@ -25,7 +29,7 @@ def JsonSelctor(domain):
 
     if json_file_path:
         try:
-            with open(json_file_path, 'r') as file:
+            with (DATA_DIRECTORY / json_file_path).open('r', encoding='utf-8') as file:
                 domain_data = json.load(file)
                 # CRITICAL ADDITION: Return the data so the main app can use it
                 return domain_data 

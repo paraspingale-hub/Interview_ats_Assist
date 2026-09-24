@@ -3,7 +3,7 @@ import os
 
 # Function 1: Generate Questions
 def ask_llm(domain: str, difficulty: str) -> str:
-    prompt = f"""Generate 5 actual interview questions for {domain} at {difficulty} level.
+    prompt = f"""Generate 15 actual interview questions for {domain} at {difficulty} level.
 Output them strictly as a numbered list where each question is on a new line, like this:
 1. What is...
 2. Explain...

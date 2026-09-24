@@ -25,7 +25,10 @@ This module is responsible for:
 # Import ask_llm function
 # Used to communicate with Llama3 model
 
-from Geminiapi import evaluate_with_gemini
+try:
+    from .Geminiapi import evaluate_with_gemini
+except ImportError:  # Preserve direct: streamlit run app.py
+    from Geminiapi import evaluate_with_gemini
 
 class MockInterviewAgent:
     """

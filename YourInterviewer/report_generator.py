@@ -23,10 +23,14 @@ The report is automatically stored inside the
 # Import os module
 # Used for folder and file operations
 import os
+from pathlib import Path
 
 # Import datetime module
 # Used to generate timestamp for report file
 import datetime
+
+
+REPORTS_DIRECTORY = Path(__file__).resolve().parent / "reports"
 
 
 def save_report(student_name, report):
@@ -47,8 +51,7 @@ def save_report(student_name, report):
 
     # Check whether reports folder exists
     # If not present, create it
-    if not os.path.exists("reports"):
-        os.mkdir("reports")
+    REPORTS_DIRECTORY.mkdir(exist_ok=True)
 
     # Generate current timestamp
     # Example:
@@ -63,12 +66,8 @@ def save_report(student_name, report):
 
     # Generate report filename
     # AI_Agent added in filename
-    filename = (
-        f"reports/"
-        f"AI_Agent_"
-        f"{safe_name}_"
-        f"Interview_Report_"
-        f"{timestamp}.txt"
+    filename = REPORTS_DIRECTORY / (
+        f"AI_Agent_{safe_name}_Interview_Report_{timestamp}.txt"
     )
 
     # Open file in write mode
@@ -104,4 +103,4 @@ def save_report(student_name, report):
     print("================================================")
 
     # Return generated filename
-    return filename
+    return str(filename)
