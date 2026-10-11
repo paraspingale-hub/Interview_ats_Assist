@@ -1,0 +1,19 @@
+# Python and local runtime files
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Local secrets
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Generated interview artifacts
+YourInterviewer/questions/
+YourInterviewer/reports/
+
+# Local PDF/report build intermediates
+tmp/pdfs/.venv/
+tmp/pdfs/rendered/
+tmp/pdfs/contact.png

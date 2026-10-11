@@ -46,7 +46,7 @@ def call_llm_with_fallback(prompt: str) -> str:
     return f"❌ All AI models failed.\n\n{combined_errors}"
 
 def call_gemini(prompt: str) -> str:
-    api_key = os.getenv("REDACTED_API_KEY")
+    api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         return "❌ Error: GEMINI_API_KEY is not set."
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
@@ -64,7 +64,7 @@ def call_gemini(prompt: str) -> str:
         return f"❌ Error: {e}"
 
 def call_groq(prompt: str) -> str:
-    api_key = os.getenv("REDACTED_API_KEY")
+    api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
         return "❌ Error: GROQ_API_KEY not set."
     

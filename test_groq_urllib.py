@@ -1,4 +1,5 @@
 import urllib.request
+import os
 import urllib.error
 import json
 
@@ -9,7 +10,7 @@ data = json.dumps({
 }).encode('utf-8')
 
 headers = {
-    "Authorization": "Bearer REDACTED_API_KEY",
+    "Authorization": f"Bearer {os.getenv("GROQ_API_KEY", "")}",
     "Content-Type": "application/json"
 }
 

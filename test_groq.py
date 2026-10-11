@@ -1,6 +1,7 @@
 import requests
+import os
 
-api_key = "REDACTED_API_KEY"
+api_key = os.getenv("GROQ_API_KEY")
 url = "https://api.groq.com/openai/v1/chat/completions"
 headers = {
     "Authorization": f"Bearer {api_key}",
