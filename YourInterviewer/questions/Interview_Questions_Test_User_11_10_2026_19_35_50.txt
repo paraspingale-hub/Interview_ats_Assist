@@ -1,0 +1,24 @@
+======================================================================
+              SmartHire AI Mock Interview
+                 Generated Questions
+======================================================================
+
+Student  : Test User
+Domain   : Python Backend
+Difficulty: Beginner
+
+1. What is a RESTful API?
+2. How do you handle errors in a Python web application?
+3. What is the difference between a list and a tuple in Python?
+4. How do you implement authentication and authorization in a Flask or Django project?
+5. What is a closure in Python, and how do you use it?
+6. How do you optimize the performance of a Python web application?
+7. What is the difference between async and sync programming in Python?
+8. How do you handle concurrent requests in a Python web application?
+9. What is a decorator in Python, and how do you use it?
+10. How do you implement caching in a Python web application?
+11. What is the difference between a dictionary and an OrderedDict in Python?
+12. How do you validate user input in a Python web application?
+13. What is the concept of "Don't Repeat Yourself" (DRY) in Python programming, and how do you implement it?
+14. How do you implement logging in a Python web application?
+15. What is the difference between a set and a list in Python, and when would you use each?

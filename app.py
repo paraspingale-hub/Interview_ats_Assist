@@ -24,57 +24,85 @@ st.markdown("""
     </div>
     
     <style>
-    /* Broadly target the border wrappers for the hover effect */
+    /* Styling for card containers */
     [data-testid="stVerticalBlockBorderWrapper"] {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        background-color: rgba(255, 255, 255, 0.6) !important;
-        border: 1px solid rgba(180, 83, 9, 0.2) !important;
-        border-radius: 16px !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        background-color: rgba(255, 255, 255, 0.75) !important;
+        border: 1px solid rgba(180, 83, 9, 0.22) !important;
+        border-radius: 18px !important;
+        box-shadow: 0 4px 14px rgba(120, 113, 108, 0.05);
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        padding: 1.75rem 1.5rem !important;
     }
     [data-testid="stVerticalBlockBorderWrapper"]:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 24px rgba(180, 83, 9, 0.15) !important;
+        transform: translateY(-6px);
+        box-shadow: 0 14px 28px rgba(180, 83, 9, 0.14) !important;
         border-color: rgba(180, 83, 9, 0.5) !important;
-        background-color: rgba(255, 255, 255, 1) !important;
+        background-color: rgba(255, 255, 255, 0.98) !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
 
-def go_to_interview():
-    st.switch_page(interview_page)
-
-def go_to_ats():
-    st.switch_page(ats_page)
-
-
 def render_home():
-    st.markdown('<h1 class="main-header" style="font-size: 3.2rem; margin-top: 2rem;">SmartHire AI Career Tools</h1>', unsafe_allow_html=True)
+    st.markdown('<div style="text-align: center; margin-top: 1.5rem;"><span class="hero-chip">✨ AI Career Intelligence Suite</span></div>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header" style="font-size: 3rem; margin-top: 0.5rem; margin-bottom: 0.5rem;">SmartHire AI Career Tools</h1>', unsafe_allow_html=True)
     st.markdown(
-        '<p class="sub-header">Practice a technical interview or analyze your resume against '
-        'the skills expected in your target domain.</p>',
+        '<p class="sub-header" style="margin-bottom: 2.5rem;">Practice a dynamic technical interview or analyze your resume against industry-standard keywords.</p>',
         unsafe_allow_html=True
     )
-
-    st.write("") 
-    st.write("") 
 
     interview_column, ats_column = st.columns(2, gap="large")
     
     with interview_column:
         with st.container(border=True):
-            st.markdown("<h2 style='text-align: center; font-size: 2.2rem; margin-bottom: 0.5rem;'>🎙️</h2>", unsafe_allow_html=True)
-            st.markdown("<h3 style='text-align: center; color: #B45309 !important;'>AI Mock Interview</h3>", unsafe_allow_html=True)
-            st.markdown("<p style='text-align: center; min-height: 80px; color: #57534E;'>Generate targeted questions, evaluate your answers, and create a comprehensive final report.</p>", unsafe_allow_html=True)
-            st.button("Start Interview", type="primary", use_container_width=True, on_click=go_to_interview)
+            st.markdown("<div class='st-icon-box'>🎙️</div>", unsafe_allow_html=True)
+            st.markdown("<span class='st-category-badge'>Interactive Simulation</span>", unsafe_allow_html=True)
+            st.markdown("<h3 style='text-align: center; color: #B45309 !important; margin: 0.4rem 0 0.5rem; font-size: 1.35rem; font-weight: 700;'>AI Mock Interview</h3>", unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center; min-height: 70px; color: #57534E; font-size: 0.95rem; line-height: 1.55;'>Generate targeted questions, evaluate your answers in real time, and create a comprehensive final report.</p>", unsafe_allow_html=True)
+            st.markdown("""
+                <div class="st-feature-box">
+                    <div class="st-feat-item"><span class="feat-bullet"></span><span>Real-time LLM Assessment</span></div>
+                    <div class="st-feat-item"><span class="feat-bullet"></span><span>Adaptive Difficulty Levels</span></div>
+                    <div class="st-feat-item"><span class="feat-bullet"></span><span>Comprehensive Saved Report</span></div>
+                </div>
+            """, unsafe_allow_html=True)
+            if st.button("Start Interview", type="primary", use_container_width=True):
+                st.switch_page(interview_page)
 
     with ats_column:
         with st.container(border=True):
-            st.markdown("<h2 style='text-align: center; font-size: 2.2rem; margin-bottom: 0.5rem;'>📄</h2>", unsafe_allow_html=True)
-            st.markdown("<h3 style='text-align: center; color: #B45309 !important;'>ATS Resume Analyzer</h3>", unsafe_allow_html=True)
-            st.markdown("<p style='text-align: center; min-height: 80px; color: #57534E;'>Upload a PDF and calculate your domain-specific keyword coverage score.</p>", unsafe_allow_html=True)
-            st.button("Analyze Resume", type="primary", use_container_width=True, on_click=go_to_ats)
+            st.markdown("<div class='st-icon-box'>📄</div>", unsafe_allow_html=True)
+            st.markdown("<span class='st-category-badge'>Document AI Screening</span>", unsafe_allow_html=True)
+            st.markdown("<h3 style='text-align: center; color: #B45309 !important; margin: 0.4rem 0 0.5rem; font-size: 1.35rem; font-weight: 700;'>ATS Resume Analyzer</h3>", unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center; min-height: 70px; color: #57534E; font-size: 0.95rem; line-height: 1.55;'>Upload your PDF resume to extract text chunks and calculate your domain keyword coverage score.</p>", unsafe_allow_html=True)
+            st.markdown("""
+                <div class="st-feature-box">
+                    <div class="st-feat-item"><span class="feat-bullet"></span><span>Multi-Page PDF Parsing</span></div>
+                    <div class="st-feat-item"><span class="feat-bullet"></span><span>14+ Specialized IT Domains</span></div>
+                    <div class="st-feat-item"><span class="feat-bullet"></span><span>Candidate Tier & Score Match</span></div>
+                </div>
+            """, unsafe_allow_html=True)
+            if st.button("Analyze Resume", type="primary", use_container_width=True):
+                st.switch_page(ats_page)
+
+    st.markdown("""
+        <div class="st-highlight-strip">
+            <div class="strip-item">
+                <div class="strip-icon">🎯</div>
+                <div><strong style="color: #2D2825; font-size: 0.9rem;">14+ IT Domains</strong><br><span style="color: #78716C; font-size: 0.78rem;">Full Stack, AI, Cloud & Systems</span></div>
+            </div>
+            <div class="strip-item">
+                <div class="strip-icon">⚡</div>
+                <div><strong style="color: #2D2825; font-size: 0.9rem;">Instant Evaluation</strong><br><span style="color: #78716C; font-size: 0.78rem;">Dynamic AI feedback & metrics</span></div>
+            </div>
+            <div class="strip-item">
+                <div class="strip-icon">🔒</div>
+                <div><strong style="color: #2D2825; font-size: 0.9rem;">Private & Local</strong><br><span style="color: #78716C; font-size: 0.78rem;">Secure reports saved locally</span></div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
 
 
 def render_interview_page():

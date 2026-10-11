@@ -18,37 +18,37 @@ def evaluate_with_gemini(prompt: str) -> str:
 # Core API call logic with fallbacks
 def call_llm_with_fallback(prompt: str) -> str:
     errors = []
-    
-    # 1. Try Gemini first
-    print("Attempting to call Gemini API...")
-    gemini_response = call_gemini(prompt)
-    if not gemini_response.startswith("❌ Error:"):
-        return gemini_response
-    print(f"Gemini API failed: {gemini_response}")
-    errors.append(f"Gemini: {gemini_response}")
 
-    # 2. If Gemini fails, try Groq
-    print("Attempting to call Groq API...")
-    groq_response = call_groq(prompt)
-    if not groq_response.startswith("❌ Error:"):
-        return groq_response
-    print(f"Groq API failed: {groq_response}")
-    errors.append(f"Groq: {groq_response}")
+    # Keep the provider order explicit: cloud provider first, then the
+    # secondary cloud provider, then the local model that does not require a key.
+    providers = [
+        ("Groq", call_groq),
+        ("Gemini", call_gemini),
+        ("Ollama", call_ollama),
+    ]
 
-    # 3. If Groq fails, try Local LLM (Ollama)
-    print("Attempting to call Local LLM (Ollama)...")
-    local_response = call_ollama(prompt)
-    if not local_response.startswith("❌ Error:"):
-        return local_response
-    print(f"Ollama failed: {local_response}")
-    errors.append(f"Ollama: {local_response}")
+    for provider_name, provider_call in providers:
+        print(f"Attempting to call {provider_name}...")
+        try:
+            response = provider_call(prompt)
+        except Exception as exc:
+            response = f"❌ Error: {exc}"
+
+        if not isinstance(response, str) or not response.strip():
+            response = "❌ Error: Empty response."
+        elif not response.strip().startswith("❌ Error:"):
+            return response
+        print(f"{provider_name} failed: {response}")
+        errors.append(f"{provider_name}: {response}")
 
     # If all 3 fail, return a combined error message
     combined_errors = "\n\n".join(errors)
     return f"❌ All AI models failed.\n\n{combined_errors}"
 
 def call_gemini(prompt: str) -> str:
-    api_key = os.getenv("GEMINI_API_KEY", "REDACTED_API_KEY")
+    api_key = os.getenv("REDACTED_API_KEY")
+    if not api_key:
+        return "❌ Error: GEMINI_API_KEY is not set."
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
     headers = {"Content-Type": "application/json"}
     payload = {"contents": [{"parts": [{"text": prompt}]}]}
@@ -64,7 +64,7 @@ def call_gemini(prompt: str) -> str:
         return f"❌ Error: {e}"
 
 def call_groq(prompt: str) -> str:
-    api_key = os.getenv("GROQ_API_KEY", "REDACTED_API_KEY")
+    api_key = os.getenv("REDACTED_API_KEY")
     if not api_key:
         return "❌ Error: GROQ_API_KEY not set."
     
@@ -74,7 +74,7 @@ def call_groq(prompt: str) -> str:
         "Content-Type": "application/json"
     }
     payload = {
-        "model": "llama3-8b-8192",  # Reverted to default to see exact 400 error
+        "model": os.getenv("GROQ_MODEL", "llama-3.1-8b-instant"),
         "messages": [{"role": "user", "content": prompt}]
     }
 
@@ -91,7 +91,7 @@ def call_groq(prompt: str) -> str:
 def call_ollama(prompt: str) -> str:
     url = "http://localhost:11434/api/generate"
     payload = {
-        "model": "qwen3.5",
+        "model": os.getenv("OLLAMA_MODEL", "llama3:latest"),
         "prompt": prompt,
         "stream": False
     }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartHire | AI Career Tools</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* Base styling */
         * {
@@ -23,11 +23,13 @@
             overflow-x: hidden;
         }
 
-        /* Animated orb background to match Streamlit apps */
+        /* Animated orb background matching original palette */
         .background-container {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100%;
             overflow: hidden;
             z-index: 0;
             pointer-events: none;
@@ -41,15 +43,103 @@
             animation: float 20s infinite ease-in-out;
         }
 
-        .orb-1 { width: 500px; height: 500px; background: #6366F1; top: -150px; left: -100px; }
-        .orb-2 { width: 400px; height: 400px; background: #06B6D4; bottom: -100px; right: -100px; animation-delay: -5s; }
-        .orb-3 { width: 350px; height: 350px; background: #3B82F6; top: 40%; left: 50%; animation-delay: -10s; }
+        .orb-1 { width: 520px; height: 520px; background: #6366F1; top: -140px; left: -100px; }
+        .orb-2 { width: 420px; height: 420px; background: #06B6D4; bottom: -100px; right: -100px; animation-delay: -5s; }
+        .orb-3 { width: 360px; height: 360px; background: #3B82F6; top: 40%; left: 50%; animation-delay: -10s; }
 
         @keyframes float {
             0%   { transform: translate(0, 0) scale(1); }
             33%  { transform: translate(30px, -50px) scale(1.1); }
             66%  { transform: translate(-20px, 20px) scale(0.9); }
             100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* Top Navigation Bar Box */
+        .top-navbar {
+            position: relative;
+            z-index: 20;
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .brand-icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(6, 182, 212, 0.12);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .brand-title {
+            color: #FFFFFF;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            color: #06B6D4;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .nav-status-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.8rem;
+            color: #CBD5E1;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #10B981;
+            box-shadow: 0 0 8px #10B981;
+            animation: pulse-dot 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.85); }
         }
 
         /* Main Content Container */
@@ -61,95 +151,280 @@
             align-items: center;
             justify-content: center;
             flex-grow: 1;
-            padding: 2rem;
+            padding: 3rem 1.5rem 4rem;
             text-align: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        /* Typography */
+        /* Hero Header Box Design */
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 760px;
+            margin-bottom: 3.5rem;
+        }
+
+        .hero-badge-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 1rem;
+            border-radius: 9999px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            color: #06B6D4;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: 1.25rem;
+        }
+
         .main-header {
-            font-size: 3.5rem;
+            font-size: clamp(2.4rem, 5vw, 3.5rem);
             font-weight: 800;
             background: linear-gradient(to right, #06B6D4, #6366F1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             line-height: 1.2;
+            letter-spacing: -0.02em;
         }
 
         .sub-header {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: #94A3B8;
-            margin-bottom: 4rem;
             font-weight: 400;
-            max-width: 600px;
+            line-height: 1.6;
+            max-width: 660px;
         }
 
-        /* Card Layout */
+        /* Grid Layout with Balanced Alignment */
         .options-grid {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 2rem;
-            max-width: 1000px;
+            max-width: 980px;
             width: 100%;
-            flex-wrap: wrap;
-            justify-content: center;
+            align-items: stretch;
+            margin-bottom: 3rem;
         }
 
+        /* Box Design for Tool Cards */
         .tool-card {
             background-color: rgba(30, 41, 59, 0.7);
-            border-radius: 16px;
-            padding: 2.5rem;
-            width: 100%;
-            max-width: 450px;
+            border-radius: 20px;
+            padding: 2.25rem;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             text-align: left;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #06B6D4, #6366F1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .tool-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             border-color: rgba(6, 182, 212, 0.5);
-            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.2);
+            box-shadow: 0 16px 40px rgba(6, 182, 212, 0.18);
+            background-color: rgba(30, 41, 59, 0.85);
         }
 
-        .card-icon {
-            font-size: 3rem;
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Card Header Box (Icon + Category Badge) */
+        .card-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
             margin-bottom: 1.5rem;
+        }
+
+        .card-icon-box {
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover .card-icon-box {
+            background: rgba(6, 182, 212, 0.12);
+            border-color: rgba(6, 182, 212, 0.4);
+            transform: scale(1.05);
+        }
+
+        .card-category-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            color: #06B6D4;
         }
 
         .card-title {
             color: #FFFFFF;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            font-size: 1.45rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
         }
 
         .card-desc {
             color: #94A3B8;
-            font-size: 1rem;
-            line-height: 1.5;
-            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            margin-bottom: 1.5rem;
             flex-grow: 1;
         }
 
-        .card-action {
-            color: #06B6D4;
-            font-weight: 600;
+        /* Feature Checklist Box Design */
+        .feature-box {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 0.9rem 1.15rem;
+            margin-bottom: 1.75rem;
+            width: 100%;
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: gap 0.3s ease;
+            flex-direction: column;
+            gap: 0.55rem;
         }
 
-        .tool-card:hover .card-action {
-            gap: 1rem;
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            font-size: 0.85rem;
+            color: #CBD5E1;
+            line-height: 1.4;
+        }
+
+        .feature-bullet {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #06B6D4;
+            box-shadow: 0 0 6px rgba(6, 182, 212, 0.8);
+            flex-shrink: 0;
+        }
+
+        /* Action Button Box */
+        .card-action-box {
+            margin-top: auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.85rem 1.25rem;
+            border-radius: 12px;
+            background: rgba(6, 182, 212, 0.08);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            color: #06B6D4;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-arrow {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover .card-action-box {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(99, 102, 241, 0.2));
+            border-color: rgba(6, 182, 212, 0.5);
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.15);
+        }
+
+        .tool-card:hover .action-arrow {
+            transform: translateX(4px);
+        }
+
+        /* Quick Overview Stats Box Strip */
+        .info-strip-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            width: 100%;
+            max-width: 980px;
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 1.25rem 1.75rem;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .info-box-item {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            text-align: left;
+        }
+
+        .info-box-icon {
+            font-size: 1.4rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .info-box-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-box-title {
+            color: #FFFFFF;
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+
+        .info-box-sub {
+            color: #94A3B8;
+            font-size: 0.78rem;
         }
 
         /* Footer */
@@ -157,51 +432,191 @@
             position: relative;
             z-index: 10;
             text-align: center;
-            padding: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2.25rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
             font-size: 0.9rem;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            margin-top: auto;
         }
         
         .author-name {
             color: #E2E8F0;
             font-weight: 600;
         }
+
+        .footer-note {
+            margin-top: 0.4rem;
+            font-size: 0.8rem;
+            color: #64748B;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 820px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .info-strip-box {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .main-container {
+                padding: 2rem 1.25rem 3rem;
+            }
+
+            .hero-section {
+                margin-bottom: 2.5rem;
+            }
+
+            .nav-inner {
+                padding: 1rem 1.25rem;
+            }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Animated Ambient Orb Background -->
     <div class="background-container">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
     </div>
 
-    <div class="main-container">
-        <p class="sub-header">Select a tool to evaluate your technical skills and optimize your profile for your target IT domain.</p>
-
-        <div class="options-grid">
-            
-            <a href="http://localhost:8501/interview" class="tool-card" onclick="launchApp('Interview Agent')">
-                <div class="card-icon">🎙️</div>
-                <h2 class="card-title">AI Mock Interview</h2>
-                <p class="card-desc">Engage in a dynamic, text-based technical interview. Our LLM will generate targeted questions, evaluate your answers, and provide a comprehensive performance report.</p>
-                <div class="card-action">Start Interview <span>&rarr;</span></div>
+    <!-- Navigation Bar Box -->
+    <header class="top-navbar">
+        <div class="nav-inner">
+            <a href="#" class="brand-box">
+                <div class="brand-icon-box">🚀</div>
+                <div class="brand-text">
+                    <span class="brand-title">SmartHire</span>
+                    <span class="brand-subtitle">AI Career Suite</span>
+                </div>
             </a>
-
-            <a href="http://localhost:8501/ats-analyzer" class="tool-card" onclick="launchApp('Resume Analyzer')">
-                <div class="card-icon">📄</div>
-                <h2 class="card-title">ATS Resume Analyzer</h2>
-                <p class="card-desc">Upload your PDF resume. We will chunk the text and calculate your ATS compatibility score against industry-standard keywords for your chosen IT domain.</p>
-                <div class="card-action">Analyze Resume <span>&rarr;</span></div>
-            </a>
-
+            <div class="nav-status-box">
+                <span class="status-dot"></span>
+                <span>Platform Ready</span>
+            </div>
         </div>
-    </div>
+    </header>
 
+    <!-- Main Container -->
+    <main class="main-container">
+        
+        <!-- Hero Header Box -->
+        <section class="hero-section">
+            <div class="hero-badge-box">
+                <span>✨ Career Intelligence & Technical Readiness</span>
+            </div>
+            <h1 class="main-header">SmartHire AI Career Tools</h1>
+            <p class="sub-header">Select a specialized module to evaluate your technical skills, participate in dynamic AI mock interviews, or benchmark your resume against industry ATS standards.</p>
+        </section>
+
+        <!-- Tool Cards Box Grid -->
+        <section class="options-grid">
+            
+            <!-- Card 1: AI Mock Interview -->
+            <a href="http://localhost:8501/interview" class="tool-card" onclick="launchApp('Interview Agent')">
+                <div class="card-top-row">
+                    <div class="card-icon-box">🎙️</div>
+                    <span class="card-category-badge">Interactive Simulation</span>
+                </div>
+                <h2 class="card-title">AI Mock Interview</h2>
+                <p class="card-desc">Engage in an intelligent, text-based technical interview. Our LLM dynamically generates targeted questions based on your domain and evaluates your responses in real time.</p>
+                
+                <div class="feature-box">
+                    <div class="feature-item">
+                        <span class="feature-bullet"></span>
+                        <span>Adaptive question generation by sector</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-bullet"></span>
+                        <span>Difficulty tiers (Beginner to Advanced)</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-bullet"></span>
+                        <span>Comprehensive final performance report</span>
+                    </div>
+                </div>
+
+                <div class="card-action-box">
+                    <span>Start Interview</span>
+                    <span class="action-arrow">&rarr;</span>
+                </div>
+            </a>
+
+            <!-- Card 2: ATS Resume Analyzer -->
+            <a href="http://localhost:8501/ats-analyzer" class="tool-card" onclick="launchApp('Resume Analyzer')">
+                <div class="card-top-row">
+                    <div class="card-icon-box">📄</div>
+                    <span class="card-category-badge">Document AI Screening</span>
+                </div>
+                <h2 class="card-title">ATS Resume Analyzer</h2>
+                <p class="card-desc">Upload your PDF resume to extract content chunks and compute your compatibility score against industry-standard keywords across 14+ specialized engineering domains.</p>
+                
+                <div class="feature-box">
+                    <div class="feature-item">
+                        <span class="feature-bullet"></span>
+                        <span>Multi-page PDF extraction & chunking</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-bullet"></span>
+                        <span>Domain-specific weighted keyword matching</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-bullet"></span>
+                        <span>Candidate tier rating & coverage insights</span>
+                    </div>
+                </div>
+
+                <div class="card-action-box">
+                    <span>Analyze Resume</span>
+                    <span class="action-arrow">&rarr;</span>
+                </div>
+            </a>
+
+        </section>
+
+        <!-- Feature Overview Info Box Strip -->
+        <section class="info-strip-box">
+            <div class="info-box-item">
+                <div class="info-box-icon">🎯</div>
+                <div class="info-box-text">
+                    <span class="info-box-title">14+ IT Domains</span>
+                    <span class="info-box-sub">Full Stack, Cloud, AI & more</span>
+                </div>
+            </div>
+            <div class="info-box-item">
+                <div class="info-box-icon">⚡</div>
+                <div class="info-box-text">
+                    <span class="info-box-title">Instant Evaluation</span>
+                    <span class="info-box-sub">Automated feedback & metrics</span>
+                </div>
+            </div>
+            <div class="info-box-item">
+                <div class="info-box-icon">🔒</div>
+                <div class="info-box-text">
+                    <span class="info-box-title">Local & Secure</span>
+                    <span class="info-box-sub">Data kept private & report saved</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Box -->
+    <footer>
+        <p>SmartHire &bull; Engineered by <span class="author-name">Paras Rahul Pingale</span></p>
+        <p class="footer-note">AI Career Assessment &amp; ATS Keyword Verification Suite</p>
+    </footer>
 
     <script>
         function launchApp(appName) {
-            console.log(`Launching ${appName}... Make sure the Streamlit server is running!`);
+            console.log(`Launching ${appName}... Make sure the Streamlit server is running on localhost:8501!`);
         }
     </script>
 </body>

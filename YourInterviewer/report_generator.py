@@ -23,6 +23,7 @@ The report is automatically stored inside the
 # Import os module
 # Used for folder and file operations
 import os
+import re
 from pathlib import Path
 
 # Import datetime module
@@ -31,6 +32,34 @@ import datetime
 
 
 REPORTS_DIRECTORY = Path(__file__).resolve().parent / "reports"
+QUESTIONS_DIRECTORY = Path(__file__).resolve().parent / "questions"
+
+
+def _safe_filename_part(value):
+    """Keep user-provided names out of generated paths."""
+    cleaned = re.sub(r"[^A-Za-z0-9_-]+", "_", str(value).strip())
+    return cleaned.strip("_") or "Interview"
+
+
+def save_questions(student_name, domain, difficulty, questions):
+    """Save the generated question set so the interview can reuse it."""
+    QUESTIONS_DIRECTORY.mkdir(exist_ok=True)
+    timestamp = datetime.datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
+    safe_name = _safe_filename_part(student_name)
+    filename = QUESTIONS_DIRECTORY / f"Interview_Questions_{safe_name}_{timestamp}.txt"
+
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write("=" * 70 + "\n")
+        file.write("              SmartHire AI Mock Interview\n")
+        file.write("                 Generated Questions\n")
+        file.write("=" * 70 + "\n\n")
+        file.write(f"Student  : {student_name}\n")
+        file.write(f"Domain   : {domain}\n")
+        file.write(f"Difficulty: {difficulty}\n\n")
+        for index, question in enumerate(questions, start=1):
+            file.write(f"{index}. {question}\n")
+
+    return str(filename)
 
 
 def save_report(student_name, report):

@@ -132,6 +132,86 @@ def set_custom_css():
         }
         
         .block-container { position: relative; z-index: 10; }
+
+        /* Shared Box Design Components */
+        .hero-chip {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.4rem 0.95rem; border-radius: 9999px;
+            background: rgba(180, 83, 9, 0.08); border: 1px solid rgba(180, 83, 9, 0.2);
+            color: #B45309; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.75rem;
+        }
+        .st-icon-box {
+            width: 56px; height: 56px; border-radius: 14px;
+            background: rgba(180, 83, 9, 0.08); border: 1px solid rgba(180, 83, 9, 0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.7rem; margin: 0 auto 0.75rem auto;
+        }
+        .st-category-badge {
+            display: block; font-size: 0.72rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            padding: 0.25rem 0.65rem; border-radius: 9999px;
+            background: rgba(180, 83, 9, 0.08); border: 1px solid rgba(180, 83, 9, 0.2);
+            color: #B45309; margin: 0 auto 0.5rem auto; text-align: center; width: fit-content;
+        }
+        .st-feature-box {
+            background: rgba(250, 249, 246, 0.85); border: 1px solid rgba(214, 211, 209, 0.6);
+            border-radius: 12px; padding: 0.85rem 1rem; margin: 0.85rem 0 1.25rem 0;
+            display: flex; flex-direction: column; gap: 0.45rem; text-align: left;
+        }
+        .st-feat-item {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 0.82rem; color: #57534E;
+        }
+        .feat-bullet {
+            width: 5px; height: 5px; border-radius: 50%;
+            background-color: #B45309; flex-shrink: 0;
+        }
+        .st-highlight-strip {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+            margin-top: 2.5rem; padding: 1.25rem 1.5rem;
+            background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(180, 83, 9, 0.18);
+            border-radius: 16px; box-shadow: 0 4px 15px rgba(120, 113, 108, 0.06);
+        }
+        .strip-item {
+            display: flex; align-items: center; gap: 0.75rem; text-align: left;
+        }
+        .strip-icon {
+            font-size: 1.3rem; width: 36px; height: 36px; border-radius: 10px;
+            background: rgba(180, 83, 9, 0.08); display: flex;
+            align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .card-box-header {
+            display: flex; align-items: center; gap: 0.65rem;
+            margin-bottom: 1.25rem; padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(214, 211, 209, 0.5);
+        }
+        .metric-box {
+            background: rgba(250, 249, 246, 0.9); border: 1px solid rgba(180, 83, 9, 0.25);
+            border-radius: 12px; padding: 1.1rem; text-align: center;
+            display: flex; flex-direction: column; gap: 0.3rem;
+            box-shadow: 0 2px 8px rgba(120, 113, 108, 0.05);
+        }
+        .metric-label {
+            font-size: 0.82rem; font-weight: 600; color: #78716C;
+            text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .metric-val {
+            font-size: 1.85rem; font-weight: 800; color: #B45309; line-height: 1.1;
+        }
+        .keywords-grid {
+            display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.85rem;
+        }
+        .keyword-chip {
+            display: inline-flex; align-items: center; gap: 0.45rem;
+            padding: 0.4rem 0.8rem; background: #FAF9F6;
+            border: 1px solid rgba(214, 211, 209, 0.85); border-radius: 8px;
+            font-size: 0.85rem; color: #2D2825;
+        }
+        .kw-badge {
+            font-size: 0.72rem; color: #B45309; font-weight: 600;
+            background: rgba(180, 83, 9, 0.08); padding: 0.15rem 0.4rem;
+            border-radius: 4px; border: 1px solid rgba(180, 83, 9, 0.15);
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -161,12 +241,13 @@ def tech_stack_banner():
 
 
 import re
+from concurrent.futures import ThreadPoolExecutor
 try:
     from .interview_agent import MockInterviewAgent
-    from .report_generator import save_report
+    from .report_generator import save_questions, save_report
 except ImportError:  # Preserve direct: streamlit run app.py
     from interview_agent import MockInterviewAgent
-    from report_generator import save_report
+    from report_generator import save_questions, save_report
 
 # ... [Keep your set_custom_css() and tech_stack_banner() functions exactly as they are] ...
 
@@ -179,6 +260,16 @@ def init_session_state():
         st.session_state.current_q_index = 0
     if "agent" not in st.session_state:
         st.session_state.agent = None
+    if "pending_evaluations" not in st.session_state:
+        st.session_state.pending_evaluations = {}
+    if "evaluation_executor" not in st.session_state:
+        st.session_state.evaluation_executor = ThreadPoolExecutor(max_workers=2)
+    if "questions_filename" not in st.session_state:
+        st.session_state.questions_filename = None
+    if "final_report" not in st.session_state:
+        st.session_state.final_report = None
+    if "report_filename" not in st.session_state:
+        st.session_state.report_filename = None
 
 def parse_questions(raw_text):
     """Extracts questions into a clean Python list"""
@@ -186,6 +277,8 @@ def parse_questions(raw_text):
     questions = []
     for line in lines:
         # Match lines that start with a number (e.g., "1. What is...")
+        if not re.match(r'^\s*\d+\.\s+', line):
+            continue
         clean_line = re.sub(r'^\d+\.\s*\**', '', line).strip('* ')
         if len(clean_line) > 10: # ensure it's a real question
             questions.append(clean_line)
@@ -193,7 +286,15 @@ def parse_questions(raw_text):
 
 def render_setup_stage():
     with st.form("assessment_card"):
-        st.write("")
+        st.markdown("""
+            <div class="card-box-header">
+                <span style="font-size: 1.35rem;">🎙️</span>
+                <div>
+                    <h4 style="margin: 0; color: #B45309; font-weight: 700;">Candidate & Interview Profile</h4>
+                    <p style="margin: 0; font-size: 0.85rem; color: #78716C;">Configure your parameters to generate targeted technical questions</p>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
         student_name = st.text_input("Enter your Name")
         domain = st.text_input("Enter your IT Sector / Domain", placeholder="e.g., Python Backend")
         difficulty = st.selectbox("Difficulty level", ["Beginner", "Intermediate", "Advanced"])
@@ -211,16 +312,26 @@ def render_setup_stage():
                     return
 
                 parsed_qs = parse_questions(raw_qs)
-                
-                if not parsed_qs:
-                    st.error("Failed to parse questions. Please try again.")
+                if len(parsed_qs) < 15:
+                    st.error(
+                        f"The model returned only {len(parsed_qs)} numbered questions. "
+                        "Please try again."
+                    )
                     return
+                parsed_qs = parsed_qs[:15]
 
                 # Initialize the Agent
                 st.session_state.agent = MockInterviewAgent(student_name)
                 st.session_state.questions_list = parsed_qs
                 st.session_state.current_q_index = 0
                 st.session_state.domain = domain
+                st.session_state.difficulty = difficulty
+                st.session_state.questions_filename = save_questions(
+                    student_name, domain, difficulty, parsed_qs
+                )
+                st.session_state.pending_evaluations = {}
+                st.session_state.final_report = None
+                st.session_state.report_filename = None
                 st.session_state.stage = "interview"
                 st.rerun()
 
@@ -228,26 +339,49 @@ def render_interview_stage():
     current_index = st.session_state.current_q_index
     total_qs = len(st.session_state.questions_list)
     question = st.session_state.questions_list[current_index]
+    domain_name = st.session_state.get('domain', 'Technical Interview')
 
-    st.markdown(f'<div class="questions-card"><h3>Question {current_index + 1} of {total_qs}</h3><p style="font-size:1.2rem; color:#2D2825;">{question}</p></div>', unsafe_allow_html=True)
+    st.markdown(f"""
+        <div class="questions-card">
+            <div class="card-box-header">
+                <span style="font-size: 1.3rem;">💡</span>
+                <div>
+                    <h3 style="margin: 0; color: #B45309; font-weight: 700;">Question {current_index + 1} of {total_qs}</h3>
+                    <p style="margin: 0; font-size: 0.85rem; color: #78716C;">Topic: {domain_name}</p>
+                </div>
+            </div>
+            <div style="background: rgba(250, 249, 246, 0.95); border: 1px solid rgba(214, 211, 209, 0.6); border-radius: 12px; padding: 1.25rem; margin-bottom: 0.5rem;">
+                <p style="font-size: 1.15rem; color: #2D2825; line-height: 1.55; margin: 0; font-weight: 500;">{question}</p>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    questions_filename = st.session_state.get("questions_filename")
+    if questions_filename:
+        st.caption(f"Question set saved to: {questions_filename}")
+    if st.session_state.get("pending_evaluations"):
+        st.info(
+            "Your previous answer is being evaluated in the background. "
+            "You can continue with this question."
+        )
 
     with st.form(key=f"q_form_{current_index}"):
-        answer = st.text_area("Your Answer:", height=150)
+        answer = st.text_area("Your Answer:", height=150, placeholder="Type your technical response here...")
         submitted = st.form_submit_button("Submit Answer & Continue")
 
     if submitted:
         if not answer.strip():
             st.warning("Please provide an answer before continuing.")
         else:
-            with st.spinner("Agent is evaluating your response..."):
-                # Evaluate using the Agent from interview_agent.py
-                st.session_state.agent.evaluate_answer(
-                    topic=st.session_state.domain, 
-                    question=question, 
-                    answer=answer
-                )
-            
-            # Move to next question or finish
+            future = st.session_state.evaluation_executor.submit(
+                st.session_state.agent.evaluate_answer_for_background,
+                topic=st.session_state.domain,
+                question=question,
+                answer=answer,
+            )
+            st.session_state.pending_evaluations[current_index] = future
+
+            # Advance immediately while the worker evaluates this answer.
             if current_index + 1 < total_qs:
                 st.session_state.current_q_index += 1
                 st.rerun()
@@ -257,18 +391,54 @@ def render_interview_stage():
 
 def render_report_stage():
     st.success("🎉 Interview Completed!")
+
+    if st.session_state.final_report is None:
+        with st.spinner("Finishing answer evaluations and generating final report..."):
+            for question_index in sorted(st.session_state.pending_evaluations):
+                future = st.session_state.pending_evaluations[question_index]
+                try:
+                    evaluation_record = future.result()
+                except Exception as exc:
+                    evaluation_record = {
+                        "topic": st.session_state.domain,
+                        "question": st.session_state.questions_list[question_index],
+                        "answer": "",
+                        "evaluation": f"Background evaluation failed: {exc}",
+                        "score": 0,
+                    }
+                st.session_state.agent.record_evaluation(evaluation_record)
+
+            st.session_state.pending_evaluations = {}
+            st.session_state.final_report = st.session_state.agent.generate_final_report()
+            st.session_state.report_filename = save_report(
+                st.session_state.agent.student_name,
+                st.session_state.final_report,
+            )
+
+    report = st.session_state.final_report
+    filename = st.session_state.report_filename
     
-    with st.spinner("Generating Final Report..."):
-        report = st.session_state.agent.generate_final_report()
-        filename = save_report(st.session_state.agent.student_name, report)
-    
-    st.markdown(f'<div class="questions-card"><h3>📈 Final Assessment Report</h3></div>', unsafe_allow_html=True)
+    st.markdown("""
+        <div class="questions-card">
+            <div class="card-box-header">
+                <span style="font-size: 1.35rem;">📈</span>
+                <div>
+                    <h3 style="margin: 0; color: #B45309; font-weight: 700;">Final Assessment Report</h3>
+                    <p style="margin: 0; font-size: 0.85rem; color: #78716C;">Detailed technical breakdown and AI feedback</p>
+                </div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
     
     # Display Report in a code block for formatting
     st.code(report, language="markdown")
     st.info(f"Report securely saved locally to: `{filename}`")
     
-    if st.button("Start New Interview"):
+    if st.button("Start New Interview", type="primary"):
+        st.session_state.pending_evaluations = {}
+        st.session_state.questions_filename = None
+        st.session_state.final_report = None
+        st.session_state.report_filename = None
         st.session_state.stage = "setup"
         st.rerun()
 
@@ -287,11 +457,12 @@ def main(configure_page=True):
     
     init_session_state()
 
-    st.markdown('<h1 class="main-header">Elevate Your Tech Journey</h1>', unsafe_allow_html=True)
+    st.markdown('<div style="text-align: center; margin-top: 1rem;"><span class="hero-chip">🎙️ AI Technical Mock Interview</span></div>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header" style="font-size: 2.8rem; margin-top: 0.25rem; margin-bottom: 0.5rem; text-align: center;">Elevate Your Tech Journey</h1>', unsafe_allow_html=True)
     
     # State Machine Logic
     if st.session_state.stage == "setup":
-        st.markdown('<p class="sub-header">Select your domain and gauge your expertise to begin.</p>', unsafe_allow_html=True)
+        st.markdown('<p class="sub-header" style="text-align: center; margin-bottom: 2rem;">Select your domain and gauge your expertise to begin.</p>', unsafe_allow_html=True)
         render_setup_stage()
         tech_stack_banner()
     elif st.session_state.stage == "interview":

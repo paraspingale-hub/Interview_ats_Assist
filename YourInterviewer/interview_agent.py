@@ -68,6 +68,54 @@ class MockInterviewAgent:
         # Stores total accumulated score
         self.total_score = 0
 
+    def _build_evaluation_prompt(self, topic, question, answer):
+        return f"""
+You are an expert technical interviewer from Infosystems.
+
+Evaluate the student's answer carefully.
+
+Student Name: {self.student_name}
+Topic: {topic}
+Question: {question}
+Student Answer: {answer}
+
+Give response strictly in this format:
+
+Score: <number out of 10>
+
+Evaluation:
+Write whether the answer is correct, partially correct, or incorrect.
+
+Missing Points:
+Mention important technical points missing in the answer.
+
+Improved Answer:
+Write a better answer in simple student-friendly language.
+
+Interview Suggestion:
+Give one practical suggestion to improve interview performance.
+"""
+
+    def evaluate_answer_for_background(self, topic, question, answer):
+        """Evaluate an answer without mutating history, for background work."""
+        print("Sending answer to the LLM for background evaluation...")
+        evaluation = evaluate_with_gemini(
+            self._build_evaluation_prompt(topic, question, answer)
+        )
+        score = self.extract_score(evaluation)
+        return {
+            "topic": topic,
+            "question": question,
+            "answer": answer,
+            "evaluation": evaluation,
+            "score": score,
+        }
+
+    def record_evaluation(self, evaluation_record):
+        """Add a completed background evaluation to the final report history."""
+        self.total_score += evaluation_record.get("score", 0)
+        self.history.append(evaluation_record)
+
     def evaluate_answer(self, topic, question, answer):
         """
         Function Name : evaluate_answer
